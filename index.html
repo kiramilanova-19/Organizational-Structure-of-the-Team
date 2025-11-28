@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інфографіка Організаційної Структури</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: Roboto for Material feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F3F4F6;
+            color: #1F2937;
+        }
+
+        /* Chart Container Styling per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Base height */
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Custom Hierarchy Tree Styling (CSS-only lines) */
+        .tree-branch {
+            border-left: 2px solid #CBD5E1; /* gray-300 */
+            /* Ensure mobile spacing is reasonable */
+            margin-left: 1rem;
+            padding-left: 1rem;
+            padding-top: 1rem;
+            position: relative;
+        }
+        
+        /* Adjust connector line width for better mobile display */
+        .tree-branch::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            left: 0;
+            width: 0.5rem; /* Reduced width for mobile */
+            height: 2px;
+            background-color: #CBD5E1;
+        }
+
+        @media (min-width: 640px) { /* sm breakpoint */
+             .tree-branch {
+                margin-left: 1.5rem;
+                padding-left: 1.5rem;
+            }
+            .tree-branch::before {
+                width: 1rem;
+            }
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s;
+        }
+        
+        .card-shadow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 text-white py-8 sm:py-12 px-4 shadow-lg mb-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">Організаційна Структура Команди </h1>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">БАСТІОН-БЦ </h1>
+            <p class="text-lg sm:text-xl md:text-2xl font-light text-blue-100">Візуалізація ієрархії, розподілу ролей та функціональних зв'язків</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 pb-12 space-y-10 sm:space-y-12">
+
+        <!-- SECTION 1: Owner and Executive Leadership -->
+        <section>
+            <div class="mb-6 border-l-4 border-blue-600 pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Власник та Вищий Керівний Склад</h2>
+                <p class="text-gray-600 mt-2 text-sm sm:text-base">Стратегічне управління компанією здійснюється під наглядом Власника, з операційним контролем через вертикаль CEO та CFO.</p>
+            </div>
+            
+            <!-- Owner Card - Absolute Top (Adaptive text size) -->
+            <div class="bg-gray-800 text-white rounded-xl p-6 sm:p-8 card-shadow mb-8 mx-auto max-w-lg text-center border-b-4 border-amber-500">
+                <div class="text-4xl sm:text-5xl mb-2 sm:mb-3">👑</div>
+                <h3 class="text-2xl sm:text-3xl font-bold">Рибальченко Дмитро Миколайович</h3>
+                <p class="text-amber-400 font-bold tracking-widest uppercase text-sm sm:text-base">Власник / Owner</p>
+            </div>
+
+            <!-- Visual Separator/Connector -->
+            <div class="text-center text-3xl sm:text-4xl text-gray-400 mb-8">
+                ↓
+            </div>
+
+            <!-- Executive Cards Grid (1 column mobile, 2 columns desktop) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                <!-- CEO Card (Adaptive text size) -->
+                <div class="bg-white rounded-xl p-6 sm:p-8 card-shadow flex items-center border-t-4 border-blue-500">
+                    <div class="bg-blue-100 p-3 sm:p-4 rounded-full mr-4 sm:mr-6 text-3xl sm:text-4xl text-blue-600 font-bold">
+                        👔
+                    </div>
+                    <div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-gray-800">Мазур Максим Вікторович</h3>
+                        <p class="text-blue-600 font-bold tracking-wide text-sm">CEO / Директор</p>
+                        <p class="text-gray-500 mt-1 text-xs sm:text-sm">Головний Виконавчий Директор</p>
+                    </div>
+                </div>
+
+                <!-- CFO Card (Adaptive text size) -->
+                <div class="bg-white rounded-xl p-6 sm:p-8 card-shadow flex items-center border-t-4 border-cyan-500">
+                    <div class="bg-cyan-100 p-3 sm:p-4 rounded-full mr-4 sm:mr-6 text-3xl sm:text-4xl text-cyan-600 font-bold">
+                        📈
+                    </div>
+                    <div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-gray-800">Шевченко Дмитро Сергійович</h3>
+                        <p class="text-cyan-600 font-bold tracking-wide text-sm">CFO / Директор фінанси</p>
+                        <p class="text-gray-500 mt-1 text-xs sm:text-sm">Головний Фінансовий Директор</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Data Overview (Charts) -->
+        <section>
+            <div class="mb-6 border-l-4 border-amber-500 pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Аналіз Складу Команди</h2>
+                <p class="text-gray-600 mt-2 text-sm sm:text-base">Кількісний розподіл персоналу між департаментами та рівнями ієрархії демонструє фокус компанії на виробничих процесах.</p>
+            </div>
+
+            <!-- Charts Grid (1 column mobile, 2 columns desktop) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                
+                <!-- Chart 1: Department Distribution -->
+                <div class="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-col">
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">Розподіл за Департаментами</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm mb-4">Відсоткове співвідношення співробітників у ключових функціональних зонах.</p>
+                    
+                    <!-- Chart Container -->
+                    <div class="chart-container flex-grow">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                    
+                    <div class="mt-4 text-xs sm:text-sm text-gray-600 bg-gray-50 p-3 rounded">
+                        <strong>Ключовий висновок:</strong> Виробничий сектор є найбільшим (бл. 50%), що підкреслює індустріальний характер бізнесу.
+                    </div>
+                </div>
+
+                <!-- Chart 2: Hierarchy Levels (Horizontal Bar) -->
+                <div class="bg-white rounded-xl shadow-md p-4 sm:p-6 flex flex-col">
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">Ієрархічна Структура</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm mb-4">Кількість співробітників на кожному рівні управління та виконання.</p>
+                    
+                    <!-- Chart Container -->
+                    <div class="chart-container flex-grow">
+                        <canvas id="hierarchyChart"></canvas>
+                    </div>
+
+                    <div class="mt-4 text-xs sm:text-sm text-gray-600 bg-gray-50 p-3 rounded">
+                        <strong>Ключовий висновок:</strong> Компанія має пласку структуру з великою кількістю спеціалістів (Expert/Engineer) та бригадирів.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Deep Dive - Production Structure -->
+        <section>
+            <div class="mb-6 border-l-4 border-green-600 pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Виробнича Вертикаль</h2>
+                <p class="text-gray-600 mt-2 text-sm sm:text-base">Детальна структура основного операційного підрозділу, що підпорядковується керівництву виробництва.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-4 sm:p-8">
+                
+                <!-- Root: Production Leadership -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-blue-50 border-2 border-blue-200 p-4 rounded-lg w-full max-w-sm text-center">
+                        <div class="text-xl sm:text-2xl mb-2">🏭</div>
+                        <div class="font-bold text-blue-800 text-base sm:text-lg">Керівник виробництва (Lider)</div>
+                        <div class="text-gray-700 font-medium">Ковальов Владислав</div>
+                    </div>
+                </div>
+
+                <!-- Branch 1: Brigadiers (Team Leaders) - Adaptive Grid -->
+                <div class="tree-branch">
+                    <h4 class="font-bold text-gray-800 bg-gray-100 inline-block px-2 sm:px-3 py-1 rounded mb-3 text-sm sm:text-base">Бригадири (Team Leaders)</h4>
+                    <!-- Mobile: 3 columns, Tablet: 4 columns, Desktop: 6 columns -->
+                    <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3"> 
+                        <div class="bg-orange-50 border border-orange-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-orange-400 font-bold uppercase mb-1">Lider</div>
+                            <div class="font-medium text-gray-700 text-sm">Халявінський Міхайло</div>
+                        </div>
+                         <div class="bg-orange-50 border border-orange-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-orange-400 font-bold uppercase mb-1">Lider</div>
+                            <div class="font-medium text-gray-700 text-sm">Скалецький Дмитро</div>
+                        </div>
+                        <div class="bg-orange-50 border border-orange-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-orange-400 font-bold uppercase mb-1">Lider</div>
+                            <div class="font-medium text-gray-700 text-sm">Щур Роман</div>
+                        </div>
+                        <div class="bg-orange-50 border border-orange-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-orange-400 font-bold uppercase mb-1">Lider</div>
+                            <div class="font-medium text-gray-700 text-sm">Руденко Олег</div>
+                        </div>
+                        <div class="bg-orange-50 border border-orange-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-orange-400 font-bold uppercase mb-1">Lider</div>
+                            <div class="font-medium text-gray-700 text-sm">Кутовий Роман</div>
+                        </div>
+                        <div class="bg-orange-50 border border-orange-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-orange-400 font-bold uppercase mb-1">Lider</div>
+                            <div class="font-medium text-gray-700 text-sm">Стоматюк Олег</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch 2: Engineers - Adaptive Grid -->
+                <div class="tree-branch mt-6">
+                    <h4 class="font-bold text-gray-800 bg-gray-100 inline-block px-2 sm:px-3 py-1 rounded mb-3 text-sm sm:text-base">Технічний Відділ (Engineers)</h4>
+                    <!-- Mobile: 3 columns, Tablet: 4 columns, Desktop: 5 columns -->
+                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-3">
+                        <div class="bg-white border border-gray-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-gray-400 font-bold uppercase mb-1">Tech</div>
+                            <div class="font-medium text-gray-700 text-sm">Гриценко Андрій</div>
+                        </div>
+                        <div class="bg-white border border-gray-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-gray-400 font-bold uppercase mb-1">Tech</div>
+                            <div class="font-medium text-gray-700 text-sm">Ліщук Максим</div>
+                        </div>
+                        <div class="bg-white border border-gray-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-gray-400 font-bold uppercase mb-1">Tech</div>
+                            <div class="font-medium text-gray-700 text-sm">Тімошенко Міколай</div>
+                        </div>
+                        <div class="bg-white border border-gray-200 p-2 sm:p-3 rounded text-center shadow-sm">
+                            <div class="text-xs text-gray-400 font-bold uppercase mb-1">Tech</div>
+                            <div class="font-medium text-gray-700 text-sm">Ліщук Анатолій</div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Branch 3: Operations - Using flex-wrap for fluidity -->
+                <div class="tree-branch mt-6">
+                    <h4 class="font-bold text-gray-800 bg-gray-100 inline-block px-2 sm:px-3 py-1 rounded mb-3 text-sm sm:text-base">Операційний Персонал</h4>
+                    <div class="flex flex-wrap gap-3">
+                         <div class="bg-gray-50 border border-gray-300 p-2 sm:p-3 rounded flex items-center gap-3 pr-4 sm:pr-6">
+                            <div class="bg-gray-200 p-1 sm:p-2 rounded text-base sm:text-lg">📦</div>
+                            <div>
+                                <div class="text-xs text-gray-500 font-bold">Склад</div>
+                                <div class="font-medium text-sm sm:text-base">Кукла Людмила</div>
+                            </div>
+                        </div>
+                         <div class="bg-gray-50 border border-gray-300 p-2 sm:p-3 rounded flex items-center gap-3 pr-4 sm:pr-6">
+                            <div class="bg-gray-200 p-1 sm:p-2 rounded text-base sm:text-lg">🚚</div>
+                            <div>
+                                <div class="text-xs text-gray-500 font-bold">Водії</div>
+                                <div class="font-medium text-sm sm:text-base">Мельніков Сергій</div>
+                                <div class="font-medium text-sm sm:text-base">Курочкін Денис</div>
+                                <div class="font-medium text-sm sm:text-base">Сиворакша Олександр</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: Functional & Support Units -->
+        <section>
+             <div class="mb-6 border-l-4 border-purple-500 pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Менеджмент та Підтримка</h2>
+                <p class="text-gray-600 mt-2 text-sm sm:text-base">Ключові експерти, що забезпечують адміністрування, фінанси та продажі.</p>
+            </div>
+
+            <!-- Functional Grid (1 column mobile, 3 columns desktop) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Finance Column -->
+                <div class="bg-white rounded-xl shadow p-5 sm:p-6 border-t-4 border-cyan-400">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <span class="bg-cyan-100 text-cyan-600 p-1 rounded">💰</span> Фінанси
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between items-center border-b pb-2 text-sm sm:text-base">
+                            <span class="text-gray-600">Литовка Любов</span>
+                            <span class="text-xs bg-cyan-50 text-cyan-700 px-2 py-1 rounded">Accountant</span>
+                        </li>
+                         <li class="flex justify-between items-center border-b pb-2 text-sm sm:text-base">
+                            <span class="text-gray-600">Власенко Людмила</span>
+                            <span class="text-xs bg-cyan-50 text-cyan-700 px-2 py-1 rounded">Accountant</span>
+                        </li>
+                         <li class="flex justify-between items-center border-b pb-2 text-sm sm:text-base">
+                            <span class="text-gray-600">Ярошенко Екатерина</span>
+                            <span class="text-xs bg-cyan-50 text-cyan-700 px-2 py-1 rounded">Accountant</span>
+                        </li>
+                         
+                    </ul>
+                </div>
+
+                <!-- Managers Column -->
+                <div class="bg-white rounded-xl shadow p-5 sm:p-6 border-t-4 border-amber-400">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <span class="bg-amber-100 text-amber-600 p-1 rounded">💼</span> Менеджери
+                    </h3>
+                    <div class="text-sm sm:text-base">
+    <div class="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm border border-amber-100">Ковальова Ольга</div>
+    <div class="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm border border-amber-100">Скородзієвска Ксенія</div>
+    <div class="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm border border-amber-100">Лошатинська Анастасія</div>
+    <div class="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm border border-amber-100">Старовойтенко Татьяна</div>
+</div>
+
+                    
+                    <!-- Sales Department Head -->
+                    <div class="mt-4 pt-4 border-t">
+                        <div class="font-bold text-xs sm:text-sm text-gray-500 mb-1">КЕРІВНИК ВІДДІЛУ ПРОДАЖІВ</div>
+                        <div class="flex items-center gap-2 text-sm sm:text-base">
+                             <span class="text-gray-800 font-medium">Бондаренко Ана</span>
+                             <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">Sales Head</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t">
+                        <div class="font-bold text-xs sm:text-sm text-gray-500 mb-1">ЗАКУПКИ</div>
+                        <div class="flex items-center gap-2 text-sm sm:text-base">
+                             <span class="text-gray-800 font-medium">Ніколаєнко Юлія</span>
+                             <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Logistics/Buyer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Column -->
+                <div class="bg-white rounded-xl shadow p-5 sm:p-6 border-t-4 border-purple-400">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <span class="bg-purple-100 text-purple-600 p-1 rounded">🚀</span> Функціональні
+                    </h3>
+                    <div class="space-y-4 text-sm sm:text-base">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-purple-50 p-2 rounded text-purple-600">👥</div>
+                            <div>
+                                <div class="font-bold text-gray-800">HR</div>
+                                <div class="text-sm text-gray-600">Борисенко Даія</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="bg-purple-50 p-2 rounded text-purple-600">💻</div>
+                            <div>
+                                <div class="font-bold text-gray-800">IT</div>
+                                <div class="text-sm text-gray-600">Терновський Костянтин</div>
+                            </div>
+                        </div>
+                         <div class="flex items-center gap-3">
+                            <div class="bg-purple-50 p-2 rounded text-purple-600">📢</div>
+                            <div>
+                                <div class="font-bold text-gray-800">Маркетинг</div>
+                                <div class="text-sm text-gray-600">Міланова Кіра</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-6 sm:py-8 text-center text-sm">
+        <p>© 2025 BASTION-BC.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- UTILITY: Label Wrapping for Chart.js ---
+        // Helps to prevent labels from being cut off on mobile charts
+        function wrapLabels(labels, maxLen = 16) {
+            return labels.map(label => {
+                if (label.length <= maxLen) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = words[0];
+
+                for (let i = 1; i < words.length; i++) {
+                    if (currentLine.length + 1 + words[i].length <= maxLen) {
+                        currentLine += ' ' + words[i];
+                    } else {
+                        lines.push(currentLine);
+                        currentLine = words[i];
+                    }
+                }
+                lines.push(currentLine);
+                return lines;
+            });
+        }
+
+        // --- SHARED CONFIG: Tooltip Callback ---
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            // Join wrapped labels back for the tooltip title
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 15, // Adjusted padding for mobile
+                        usePointStyle: true,
+                    }
+                }
+            }
+        };
+
+        // --- CHART INITIALIZATION ---
+        window.onload = function() {
+            initCharts();
+        };
+
+        function initCharts() {
+            // Data Calculation:
+            // Owner: 1
+            // Executive: 2 (CEO, CFO)
+            // Production: 15 (1 Lead (Влад), 4 Tech, 6 Brig, 1 Store, 3 Driver)
+            // Mgmt/Buy: 6 (4 Mgr + 1 Sales Head + 1 Logist)
+            // Finance: 4 (ЛА, Люда, Катя, Катя Фурси)
+            // Support: 3 (HR, IT, Mkt)
+            
+            // CHART 1: Department Distribution (Doughnut)
+            const deptCtx = document.getElementById('deptChart').getContext('2d');
+            const deptLabels = ['Виробництво', 'Менеджмент', 'Фінанси', 'Підтримка', 'Керівництво'];
+            
+            new Chart(deptCtx, {
+                type: 'doughnut',
+                data: {
+                    // Apply label wrapping for better mobile fit
+                    labels: wrapLabels(deptLabels),
+                    datasets: [{
+                        data: [15, 6, 4, 3, 2], // Production = 15
+                        backgroundColor: [
+                            '#2563EB', // Blue (Prod)
+                            '#F59E0B', // Amber (Mgmt)
+                            '#06B6D4', // Cyan (Fin)
+                            '#8B5CF6', // Purple (Supp)
+                            '#1F2937'  // Dark (Exec)
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    cutout: '70%',
+                }
+            });
+
+            // CHART 2: Hierarchy Levels (Horizontal Bar)
+            // Data Calculation:
+            // Owner: 1
+            // Executive: 2
+            // Lider/Manager: 7 (1 Prod Lead + 6 Brigadiers)
+            // Expert/Specialist: 17 (4 Mgr + 1 Sales Head + 1 Logist + 3 Supp + 4 Tech + 4 Fin)
+            // Operational: 4 (1 Store, 3 Driver)
+            
+            const hierarchyCtx = document.getElementById('hierarchyChart').getContext('2d');
+            const hierarchyLabels = ['Власник', 'Executive', 'Team Leaders (Lider)', 'Experts & Engineers', 'Operational Staff'];
+            const hierarchyData = [1, 2, 7, 17, 4]; // Expert/Engineer = 17
+            const hierarchyColors = [
+                '#000000', // Black for Owner
+                '#1F2937', // Dark Grey for Executive
+                '#F59E0B', // Amber for Lider
+                '#2563EB', // Blue for Expert
+                '#9CA3AF'  // Light Grey for Operational
+            ];
+
+            new Chart(hierarchyCtx, {
+                type: 'bar',
+                data: {
+                    // Apply label wrapping for better mobile fit
+                    labels: wrapLabels(hierarchyLabels),
+                    datasets: [{
+                        label: 'Кількість Співробітників',
+                        data: hierarchyData,
+                        backgroundColor: hierarchyColors,
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    indexAxis: 'y', 
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 5 // Limit ticks on mobile for cleaner look
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        ...commonOptions.plugins,
+                        legend: { display: false } 
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
